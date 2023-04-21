@@ -1,0 +1,5 @@
+.git*
+package*
+node_modules
+README*
+.nvmrc
