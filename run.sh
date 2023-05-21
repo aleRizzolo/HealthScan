@@ -8,3 +8,14 @@ then
     echo "Failed to create a container"
     exit 1
 fi
+
+echo *** Installing dependencies ***
+npm install
+clear
+
+echo *** Generating JavaScript ***
+npm run build
+clear
+
+echo *** Starting ***
+npm run start

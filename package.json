@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p tsconfig.json",
     "start": "node ./dist/index.js",
-    "dev": "nodemon -L --exec ts-node src/index.ts",
-    "build": "tsc -p tsconfig.json"
+    "populateDB": "node ./dist/settings/populateDB.js",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "dev:populateDB": "nodemon --exec ts-node src/settings/populateDB.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1"
   },
