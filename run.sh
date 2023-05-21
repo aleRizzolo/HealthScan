@@ -9,13 +9,12 @@ then
     exit 1
 fi
 
-echo *** Installing dependencies ***
+echo "*** Installing dependencies ***"
 npm install
-clear
 
-echo *** Generating JavaScript ***
+echo -e "\n *** Generating JavaScript ***"
 npm run build
 clear
 
-echo *** Starting ***
+echo "*** Starting ***"
 npm run start
