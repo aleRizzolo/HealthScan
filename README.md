@@ -8,6 +8,8 @@ This project aims to create an easy way on how to collect and access those infor
 - [Run this project](#how-to-run-this-project)
     - [Run from script](#executing-from-script) 
     - [Manual run](#manual-run)
+- [Future developments](#future-developments)
+- [How to contribute](#how-to-contribute)
 
 ## Overview
 Brief introduction on how this project works
@@ -25,6 +27,8 @@ Brief introduction on how this project works
 5. Telegram (?) and a Telegram Api Key (?)  
 6. **Optional:** WSL2 if you don't have a Unix-like system (useful if you want to automatize the setup process with <code>run.sh</code> script)
 
+## Get a Telegram bot token
+
 ## Create .env file
 If you want to execute this project, you need to create a .env file in the root folder of the project. In this file, you will enter some confidential variables.<br>
 After creating this file, write in it the following variables:
@@ -41,6 +45,7 @@ Under the hood, the script will:
 - start the project
 - start all the secondary scripts
 - start bot (?)
+- setup al the functions (?)
 
 ### Manual run
 If you want to run this script manually:
@@ -51,3 +56,13 @@ If you want to run this script manually:
 - start the script for populating the Database with <code>npm run populateDB</code>
 - start other scripts (?)
 - start telegram (?)
+- setup all the functions (?)
+
+## Future developments
+For fure developments this project will add more wearables for other vital parameters. Another goal will be to add email and push notifications in case some parameter is worrying
+
+## How to contribute
+1. Open an issue explaining your problem or any idea for improvement
+2. Fetch this repo 
+3. Create a new branch (on your copy) and work on it
+4. Open a Pull Request
