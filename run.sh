@@ -1,9 +1,12 @@
 #!/bin/bash
 
-image=$(docker run -d --rm -p 4566:4566 --name aws localstack/localstack)
+docker run -d --rm -p 4566:4566 --name aws localstack/localstack
+
+#check if the container exists
+container=$(docker container ps -f "name=aws")
 
 #if the container is not running exit 
-if [ -z "$image" ];
+if [ -z "$container" ];
 then
     echo "Failed to create a container"
     exit 1
@@ -16,11 +19,12 @@ echo -e "\n *** Generating JavaScript ***"
 npm run build
 clear
 
-echo "*** Create clients ***"
+echo "*** Creating clients ***"
 npm run start
 
-echo "*** Setting up ***"
+echo -e "\n*** Setting up ***"
 npm run setup
 
-echo "*** Populating DB ***"
+echo -e "\n*** Populating DB ***"
 npm run populate
+clear

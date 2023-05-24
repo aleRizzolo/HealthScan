@@ -7,8 +7,9 @@ const parameters = ["weight", "oximeter", "bpm", "cholesterol"]
 //variables for store the random result
 let result
 //get timestamp
-let new_Date = Date.now().toString()
-let fullDate = new Date().toLocaleString()
+let timestamp = Date.now().toString()
+//get the full date. "en-GB" is for get DD/MM/YYYY
+let fullDate = new Date().toLocaleString("en-GB")
 
 export const populateDB = async () => {
   for (let parameter = 0; parameter < parameters.length; parameter++) {
@@ -20,7 +21,7 @@ export const populateDB = async () => {
         O2: { S: (result = getValue(95, 100).toString() + "SpO2") },
         bpm: { S: (result = getValue(60, 100).toString() + "bpm") },
         cholesterol: { S: (result = getValue(130, 200).toString() + "mg/dl") },
-        timeStamp: { S: new_Date },
+        timeStamp: { S: timestamp },
         dayTime: { S: fullDate },
       },
     })
