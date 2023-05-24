@@ -8,13 +8,13 @@ export const runDB = async () => {
 
     AttributeDefinitions: [
       {
-        AttributeName: "zone",
+        AttributeName: "parameter",
         AttributeType: "S",
       },
     ],
     KeySchema: [
       {
-        AttributeName: "zone",
+        AttributeName: "parameter",
         KeyType: "HASH",
       },
     ],

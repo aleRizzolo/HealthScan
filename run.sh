@@ -18,3 +18,6 @@ clear
 
 echo "*** Starting ***"
 npm run start
+
+echo "*** Populating DB ***"
+npm run populate
