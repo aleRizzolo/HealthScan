@@ -52,8 +52,9 @@ If you want to run this script manually:
 - start the container by typing <code>docker run -d --rm -p 4566:4566 --name aws localstack/localstack </code>
 - install the dependencies with <code>npm install</code>
 - transpile TypeScript into JavaScript with <code>npm run build</code>
-- start the project with <code>npm run start</code>
-- start the script for populating the Database with <code>npm run populateDB</code>
+- create clients with <code>npm run start</code>
+- setup the db and queues with <code>npm run setup</code>
+- start the script for populating the Database with <code>npm run populate</code>
 - start other scripts (?)
 - start telegram (?)
 - setup all the functions (?)
