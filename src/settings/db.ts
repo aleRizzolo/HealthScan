@@ -2,7 +2,7 @@ import { CreateTableCommand } from "@aws-sdk/client-dynamodb"
 
 import { ddbClient } from "../index"
 
-export const runDB = async () => {
+export const createDB = async () => {
   const command = new CreateTableCommand({
     TableName: "HealthScan",
 
