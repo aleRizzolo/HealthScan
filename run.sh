@@ -16,8 +16,11 @@ echo -e "\n *** Generating JavaScript ***"
 npm run build
 clear
 
-echo "*** Starting ***"
+echo "*** Create clients ***"
 npm run start
+
+echo "*** Setting up ***"
+npm run setup
 
 echo "*** Populating DB ***"
 npm run populate

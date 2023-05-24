@@ -7,9 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
     "start": "node ./dist/index.js",
+    "setup": "node ./dist/setup.js",
     "populate": "node ./dist/settings/populateDB.js",
     "bot": "node ./bot/index.js",
     "dev": "nodemon --exec ts-node src/index.ts",
+    "dev:setup": "nodemon --exec ts-node src/setup.ts",
     "dev:populate": "nodemon --exec ts-node src/settings/populateDB.ts",
     "dev:bot": "nodemon ./bot/index.js"
   },

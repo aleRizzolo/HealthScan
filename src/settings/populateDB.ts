@@ -29,7 +29,7 @@ export const populateDB = async () => {
     if (!response) {
       console.error("Error populating DB\n")
     }
-    console.info("Database populated")
+    console.info("Database populated with", parameters[parameter])
   }
 }
 
