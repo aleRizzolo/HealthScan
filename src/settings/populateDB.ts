@@ -3,7 +3,12 @@ import { PutItemCommand } from "@aws-sdk/client-dynamodb"
 import { ddbClient } from "../index"
 
 //zones array for creating entries in db
-const parameters = ["weight", "oximeter", "bpm", "cholesterol"]
+const ELDERY_FAMILY_MEMBERS = [
+  "paternal_grandfather",
+  "maternal_grandfather",
+  "paternal_grandmother",
+  "maternal_grandmother",
+]
 //variables for store the random result
 let result
 //get timestamp
@@ -12,12 +17,12 @@ let timestamp = Date.now().toString()
 let fullDate = new Date().toLocaleString("en-GB")
 
 export const populateDB = async () => {
-  for (let parameter = 0; parameter < parameters.length; parameter++) {
+  for (let member = 0; member < ELDERY_FAMILY_MEMBERS.length; member++) {
     const command = new PutItemCommand({
       TableName: "HealthScan",
       Item: {
-        parameter: { S: parameters[parameter] },
-        kg: { S: (result = getValue(65, 85).toString() + "kg") },
+        family_member: { S: ELDERY_FAMILY_MEMBERS[member] },
+        bloodPressure: { S: (result = getValue(120, 129).toString() + "mmHg") },
         O2: { S: (result = getValue(95, 100).toString() + "SpO2") },
         bpm: { S: (result = getValue(60, 100).toString() + "bpm") },
         cholesterol: { S: (result = getValue(130, 200).toString() + "mg/dl") },
@@ -30,7 +35,7 @@ export const populateDB = async () => {
     if (!response) {
       console.error("Error populating DB\n")
     }
-    console.info("Database populated with", parameters[parameter])
+    console.info("Database populated with", ELDERY_FAMILY_MEMBERS[member])
   }
 }
 

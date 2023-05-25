@@ -8,13 +8,13 @@ export const createDB = async () => {
 
     AttributeDefinitions: [
       {
-        AttributeName: "parameter",
+        AttributeName: "family_member",
         AttributeType: "S",
       },
     ],
     KeySchema: [
       {
-        AttributeName: "parameter",
+        AttributeName: "family_member",
         KeyType: "HASH",
       },
     ],
