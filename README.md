@@ -1,4 +1,4 @@
-# HealthScan
+# SeaScan
 
 Internet of Things has revolutionized the way we monitor our personal health. With the introduction of wearable devices such as fitness trackers, smartwatches, and health monitors, individuals can now keep a closer eye on their health and wellness. IoT technology allows us to collect and analyze data in real-time to track our physical activity, heart rate, sleep patterns, and even blood pressure. This data not only helps individuals make better-informed decisions about their health but also enables healthcare providers to identify potential health issues before they become serious problems.<br>
 This project aims to create an easy way on how to collect and access those informations.
@@ -52,9 +52,9 @@ If you want to run this script manually:
 - start the container by typing <code>docker run -d --rm -p 4566:4566 --name aws localstack/localstack </code>
 - install the dependencies with <code>npm install</code>
 - transpile TypeScript into JavaScript with <code>npm run build</code>
-- create clients with <code>npm run start</code>
+- create clients and setup db and queues with <code>npm run start</code>
 - setup the db and queues with <code>npm run setup</code>
-- start the script for populating the Database with <code>npm run populate</code>
+- start the script for populating the Database and the device <code>npm run setup</code>
 - start other scripts (?)
 - start telegram (?)
 - setup all the functions (?)
