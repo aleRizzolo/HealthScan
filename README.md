@@ -54,7 +54,10 @@ If you want to run this script manually:
 - transpile TypeScript into JavaScript with <code>npm run build</code>
 - create clients and setup db and queues with <code>npm run start</code>
 - setup the db and queues with <code>npm run setup</code>
-- start the script for populating the Database and the device <code>npm run setup</code>
+- start the script for populating the Database and for simulating the device <code>npm run setup</code> 
+
+The device will send datas every minute. Therefore, if you don't want to stop this process, open another terminal (within the root folder) and keep executing these scripts:
+
 - start other scripts (?)
 - start telegram (?)
 - setup all the functions (?)
