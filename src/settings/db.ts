@@ -4,17 +4,17 @@ import { ddbClient } from "../index"
 
 export const createDB = async () => {
   const command = new CreateTableCommand({
-    TableName: "HealthScan",
+    TableName: "SeaScan",
 
     AttributeDefinitions: [
       {
-        AttributeName: "family_member",
+        AttributeName: "beach",
         AttributeType: "S",
       },
     ],
     KeySchema: [
       {
-        AttributeName: "family_member",
+        AttributeName: "beach",
         KeyType: "HASH",
       },
     ],
