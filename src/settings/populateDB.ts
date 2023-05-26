@@ -3,7 +3,8 @@ import { PutItemCommand } from "@aws-sdk/client-dynamodb"
 import { ddbClient } from "../index"
 
 //zones array for creating entries in db
-const parameters = ["weight", "oximeter", "bpm", "cholesterol"]
+const BEACHES = ["long_beach", "venice_beach", "santa_monica_beach", "manhattan_beach"]
+
 //variables for store the random result
 let result
 //get timestamp
@@ -12,15 +13,15 @@ let timestamp = Date.now().toString()
 let fullDate = new Date().toLocaleString("en-GB")
 
 export const populateDB = async () => {
-  for (let parameter = 0; parameter < parameters.length; parameter++) {
+  for (let beach = 0; beach < BEACHES.length; beach++) {
     const command = new PutItemCommand({
-      TableName: "HealthScan",
+      TableName: "SeaScan",
       Item: {
-        parameter: { S: parameters[parameter] },
-        kg: { S: (result = getValue(65, 85).toString() + "kg") },
-        O2: { S: (result = getValue(95, 100).toString() + "SpO2") },
-        bpm: { S: (result = getValue(60, 100).toString() + "bpm") },
-        cholesterol: { S: (result = getValue(130, 200).toString() + "mg/dl") },
+        beach: { S: BEACHES[beach] },
+        ph: { S: (result = getValue(0, 14).toString()) },
+        hydrocarbons: { S: (result = getValue(0, 10).toString() + "µg/L") },
+        eCholi: { S: (result = getValue(0, 500).toString() + "UFC/100ml") },
+        bacterias: { S: (result = getValue(0, 200).toString() + "bacterias/100ml") },
         timeStamp: { S: timestamp },
         dayTime: { S: fullDate },
       },
@@ -30,7 +31,7 @@ export const populateDB = async () => {
     if (!response) {
       console.error("Error populating DB\n")
     }
-    console.info("Database populated with", parameters[parameter])
+    console.info("Database populated with", BEACHES[beach])
   }
 }
 
