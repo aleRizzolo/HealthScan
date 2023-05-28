@@ -57,19 +57,20 @@ If you want to run this script manually:
 - transpile TypeScript into JavaScript with <code>npm run build</code>
 - create clients and setup db and queues with <code>npm run start</code>
 - setup the db and queues with <code>npm run setup</code>
+- create a new folder called <code>average</code>, copy the <code>package.json</code>, open a terminal inside this folder and then run <code>npm run install</code>
+- copy <code>dist</code> folder inside this new one
+- zip the folder with <code>tar -a -c -f average.zip average</code>. A new .zip folder should appear
+- create a new aws role with <code>aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' --endpoint-url=http://localhost:4566</code>
+- attach the policy <code>aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566</code>
+- create the function and save the Arn <code>aws lambda create-function --function-name average --zip-file fileb://average.zip --handler average/dist/functions/average.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
 - start the script for populating the Database and for simulating the device <code>npm run setup</code> 
-
-The device will send datas every minute. Therefore, if you don't want to stop this process, open another terminal (within the root folder) and keep executing these scripts:
-
-- start other scripts (?)
-- start telegram (?)
-- setup all the functions (?)
+- invoke the function <code>aws lambda invoke --function-name average --endpoint-url=http://localhost:4566</code>
 
 ## Future developments
-For fure developments this project will add more wearables for other vital parameters. Another goal will be to add email and push notifications in case some parameter is worrying
+For fure developments this project will add more metrics for scanning Sea water quality. Another goal will be to add email and push notifications in case some parameter is worrying
 
 ## How to contribute
 1. Open an issue explaining your problem or any idea for improvement
-2. Fetch this repo 
+2. Fork this repo 
 3. Create a new branch (on your copy) and work on it
 4. Open a Pull Request
