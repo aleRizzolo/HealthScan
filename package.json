@@ -22,6 +22,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.335.0",
     "@aws-sdk/client-sqs": "^3.335.0",
+    "@types/aws-lambda": "^8.10.115",
     "dotenv": "^16.0.3",
     "node-cron": "^3.0.2",
     "nodemon": "^2.0.22",
