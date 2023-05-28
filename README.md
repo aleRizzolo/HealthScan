@@ -28,13 +28,14 @@ Brief introduction on how this project works
 6. **Optional:** WSL2 if you don't have a Unix-like system (useful if you want to automatize the setup process with <code>run.sh</code> script)
 
 ## Get a Telegram bot token
+Start [Bot father](https://telegram.me/BotFather) and follow the instruction. Then copy your Telegram Bot API key
 
 ## Create .env file
 If you want to execute this project, you need to create a .env file in the root folder of the project. In this file, you will enter some confidential variables.<br>
 After creating this file, write in it the following variables:
 - REGION="the region configured in your cli"
 - ENDPOINT="http://127.0.0.1:4566" 
-- xxx
+- BOT_TOKEN="your-bot-token"
 
 ### Run from script
 If you have a Unix-like system (or WSL2), open a terminal in the project's root directory and type: <code>chmod +x run.sh</code> and then type <code>./run.sh</code> to execute the script.<br>
@@ -46,6 +47,8 @@ Under the hood, the script will:
 - start all the secondary scripts
 - start bot (?)
 - setup al the functions (?)
+
+After the script is completed, go to Telegram and interact with the Bot
 
 ### Manual run
 If you want to run this script manually:
