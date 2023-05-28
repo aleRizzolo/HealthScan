@@ -8,7 +8,7 @@ const BEACHES_QUEUE = ["long_beach", "venice_beach", "santa_monica_beach", "manh
 
 const SQS_QUEUE_URL = process.env.ENDPOINT + "/000000000000/"
 
-export const lambdaHandler = async () => {
+export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
   for (let queue = 0; queue < BEACHES_QUEUE.length; queue++) {
     let messageCount = 0
     let finalAverage = 0
@@ -73,4 +73,4 @@ export const lambdaHandler = async () => {
   }
 }
 
-lambdaHandler()
+//lambdaHandler()

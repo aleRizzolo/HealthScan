@@ -11,6 +11,13 @@ let result
 let new_Date = Date.now().toString()
 let fullDate = new Date().toLocaleString()
 
+//generates a random integer between two values, inclusive
+const getValue = (min: number, max: number) => {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 const uploadToQueues = async (sqsQueueUrl = SQS_QUEUE_URL) => {
   for (let queue = 0; queue < BEACHES_QUEUE.length; queue++) {
     let randomDeviceIterations = getValue(2, 5)
@@ -40,10 +47,3 @@ const uploadToQueues = async (sqsQueueUrl = SQS_QUEUE_URL) => {
   }
 }
 uploadToQueues()
-
-//generates a random integer between two values, inclusive
-const getValue = (min: number, max: number) => {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
