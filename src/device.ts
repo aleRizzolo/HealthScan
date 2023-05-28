@@ -1,4 +1,3 @@
-import * as cron from "node-cron"
 import { SendMessageCommand } from "@aws-sdk/client-sqs"
 
 import { queueClient } from "./index"
@@ -12,9 +11,11 @@ let result
 let new_Date = Date.now().toString()
 let fullDate = new Date().toLocaleString()
 
-cron.schedule("* * * * *", async () => {
-  const uploadToQueues = async (sqsQueueUrl = SQS_QUEUE_URL) => {
-    for (let queue = 0; queue < BEACHES_QUEUE.length; queue++) {
+const uploadToQueues = async (sqsQueueUrl = SQS_QUEUE_URL) => {
+  for (let queue = 0; queue < BEACHES_QUEUE.length; queue++) {
+    let randomDeviceIterations = getValue(2, 5)
+
+    for (let count = 0; count < randomDeviceIterations; count++) {
       const command = new SendMessageCommand({
         QueueUrl: SQS_QUEUE_URL + BEACHES_QUEUE[queue],
         DelaySeconds: 1,
@@ -37,8 +38,8 @@ cron.schedule("* * * * *", async () => {
       console.info("Message sent")
     }
   }
-  uploadToQueues()
-})
+}
+uploadToQueues()
 
 //generates a random integer between two values, inclusive
 const getValue = (min: number, max: number) => {
