@@ -1,8 +1,15 @@
 import { APIGatewayProxyEvent } from "aws-lambda"
-import { PutItemCommand } from "@aws-sdk/client-dynamodb"
-import { ReceiveMessageCommand, DeleteMessageCommand } from "@aws-sdk/client-sqs"
+import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb"
+import { ReceiveMessageCommand, DeleteMessageCommand, SQSClient } from "@aws-sdk/client-sqs"
 
-import { ddbClient, queueClient } from "../index"
+const ENDPOINT = process.env.ENDPOINT
+const REGION = process.env.REGION
+
+//db client
+const ddbClient = new DynamoDBClient({ region: REGION, endpoint: ENDPOINT })
+
+//queues
+const queueClient = new SQSClient({ region: REGION, endpoint: ENDPOINT })
 
 const BEACHES_QUEUE = ["long_beach", "venice_beach", "santa_monica_beach", "manhattan_beach"]
 

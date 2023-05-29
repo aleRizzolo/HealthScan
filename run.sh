@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ROOT=$pwd
+ROOT=$(pwd)
 
-docker run -d --rm -p 4566:4566 --name aws localstack/localstack
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm -p 4566:4566 --name aws localstack/localstack
 
 #check if the container exists
 container=$(docker container ps -f "name=aws")
@@ -26,10 +26,7 @@ npm run start
 clear
 
 echo -e "\n *** Setting up lambda ***"
-mkdir average && cp package.json average/
-cd average && npm install
-cd ..
-cp -r dist average/
+mkdir average && cp -r dist average/functions/average.js
 zip -r average.zip average
 clear
 
