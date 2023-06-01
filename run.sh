@@ -44,3 +44,7 @@ aws iam create-role --role-name lambdarole --assume-role-policy-document file://
 clear
 echo -e "\n *** Setting up ***"
 npm run setup
+
+clear
+echo -e "\n *** Starting bot ***"
+python ./bot/bot.py
