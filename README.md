@@ -31,7 +31,7 @@ The information about ph, is avalaible to and end-user via a Telegram bot.
 
 ## Get a Telegram bot token and chat id
 - Start [Bot father](https://telegram.me/BotFather) and follow the instruction. Then copy your Telegram Bot API key
-- For chat id...
+- After copying your Telegram Bot API, start the bot and then open a browser and go to <code>https://api.telegram.org/bot<\API-access-token>/getUpdates?offset=0</code>, start the bot, send a message and then refresh the page. In the response, copy the numerical string "id" in "chat" object 
 
 ## Create .env file
 If you want to execute this project, you need to create a .env file in the root folder of the project. In this file, you will enter some confidential variables.<br>
