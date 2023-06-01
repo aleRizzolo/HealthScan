@@ -3,7 +3,7 @@
 Internet of Things has revolutionized the way we monitor environment. IoT technology allows us to collect and analyze data in real-time to track all the metrics of the environment around us. This data allows a better awareness by the people about the ecosystem in wich they are <br>
 This project aims to create an easy way on how to collect and access those informations.
 
-## Table of Contests
+## Table of Contents
 - [Overview](#overview)<br>
 - [Run this project](#how-to-run-this-project)
     - [Run from script](#executing-from-script) 
@@ -25,16 +25,17 @@ The information about ph, is avalaible to and end-user via a Telegram bot.
 1. This repository <code>git clone https://github.com/aleRizzolo/HealthScan.git</code>
 2. [Docker](https://www.docker.com/)
 3. [AWS cli](https://aws.amazon.com/it/cli/)
-4. [Node.js](https://nodejs.org/it) (v18.14.2) and npm  
-5. Telegram (?) and a Telegram Api Key (?)  
-6. **Optional:** WSL2 if you don't have a Unix-like system (useful if you want to automatize the setup process with <code>run.sh</code> script)
+4. [Node.js](https://nodejs.org/it) (v18.14.2) and npm 
+5. [Python3](https://www.python.org/) and pip 
+6. Telegram and a Telegram Bot token  
+7. **Optional:** WSL2 if you don't have a Unix-like system (useful if you want to automatize the setup process with <code>run.sh</code> script)
 
-## Get a Telegram bot token and chat id
+### Get a Telegram bot token and chat id
 - Start [Bot father](https://telegram.me/BotFather) and follow the instruction. Then copy your Telegram Bot API key
-- After copying your Telegram Bot API, start the bot and then open a browser and go to <code>https://api.telegram.org/bot<\API-access-token>/getUpdates?offset=0</code>, start the bot, send a message and then refresh the page. In the response, copy the numerical string "id" in "chat" object 
+- After copying your Telegram Bot token, start the bot and then open a browser and go to <code>https://api.telegram.org/bot<\API-access-token>/getUpdates?offset=0</code>, send a message to the bot and then refresh the page. In the response, copy the numerical string "id" in "chat" object 
 
-## Create .env file
-If you want to execute this project, you need to create a .env file in the root folder of the project. In this file, you will enter some confidential variables.<br>
+### Create .env file
+If you want to execute this project, you need to create a <code>.env</code> file in the root folder of the project. In this file, you will enter some confidential variables.<br>
 After creating this file, write in it the following variables:
 - REGION="the region configured in your cli"
 - ENDPOINT="http://127.0.0.1:4566" 
@@ -44,7 +45,7 @@ After creating this file, write in it the following variables:
 - AWS_ACCESS_KEY_ID="your-aws-access-key"
 - AWS_SECRET_ACCESS_KEY="your-aws-secret-access-key"
 
-### Run from script
+## Run from script
 If you have a Unix-like system (or WSL2), open a terminal in the project's root directory and type: <code>chmod +x run.sh</code> and then type <code>./run.sh</code> to execute the script.<br>
 Under the hood, the script will: 
 - start the Docker container used for simulating the AWS environment
@@ -52,14 +53,14 @@ Under the hood, the script will:
 - transpile TypeScript into JavaScript
 - start the project
 - start all the secondary scripts
-- setup al the functions
+- setup all the functions
 - start bot
 
 After the script finishes its execution, invoke the function that it has created by runnung:
 
 <code>aws lambda invoke --function-name average out --endpoint-url=http://localhost:4566</code>
 
-### Manual run
+## Manual run
 If you want to run this script manually:
 - start the container by typing <code>docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm -p 4566:4566 --name aws localstack/localstack</code>
 - install the dependencies with <code>npm install</code>
