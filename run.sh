@@ -30,7 +30,7 @@ mkdir average && cp -r dist average/functions/average.js
 zip -r average.zip average
 clear
 
-echo -e "\n *** Creating lamda rules ***"
+echo -e "\n *** Setting up lambda ***"
 aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' \
  --endpoint-url=http://localhost:4566
 
@@ -46,5 +46,13 @@ echo -e "\n *** Setting up ***"
 npm run setup
 
 clear
+read -p "Insert your email for sending email using SES: " email
+aws ses verify-email-identity --email-address $email --endpoint-url="http://localhost:4566"
+
+clear
+echo -e "\n *** Install python dependencies ***"
+pip install -r bot/requirements.txt
+
+clear
 echo -e "\n *** Starting bot ***"
-python ./bot/bot.py
+python3 ./bot/bot.py
