@@ -36,7 +36,7 @@ aws iam create-role --role-name lambdarole --assume-role-policy-document file://
  --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566
 
  aws lambda create-function --function-name average \
- --zip-file fileb://average.zip --handler average/dist/functions/average.lambdaHandler \
+ --zip-file fileb://average.zip --handler dist/functions/average.lambdaHandler \
  --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 
 clear
