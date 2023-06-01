@@ -25,10 +25,8 @@ echo -e "\n *** Starting application ***"
 npm run start
 clear
 
-echo -e "\n *** Setting up lambda ***"
-mkdir average && cp -r dist average/functions/average.js
-zip -r average.zip average
-clear
+echo -e "\n *** Zipping functions ***"
+zip average.zip dist/functions/average.js
 
 echo -e "\n *** Setting up lambda ***"
 aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' \
