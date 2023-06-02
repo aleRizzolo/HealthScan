@@ -10,9 +10,6 @@ lerna-debug.log*
 # win script
 *.bat
 
-# python linter
-.vscode
-
 # zip
 *.zip 
 average/
