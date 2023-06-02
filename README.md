@@ -12,13 +12,11 @@ This project aims to create an easy way on how to collect and access those infor
 - [How to contribute](#how-to-contribute)
 
 ## Overview
-IoT sensors analyze some metrics about sea. All these informations are sent by SQS queues to a lambda function that stores them in a DynamoDB instance.
-Another function reads ph level and then decides whether to activate containers connected to the internet that contain chemicals that lower ph level.
-The information about ph, is avalaible to and end-user via a Telegram bot.
+*ToDo*
 
 ### Project's architecture
 
-![architecture](./images/architecture.png)
+*ToDo*
 
 ## How to run this project
 ### Prerequisites
