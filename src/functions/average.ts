@@ -1,24 +1,24 @@
-import { APIGatewayProxyEvent } from "aws-lambda"
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb"
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { ReceiveMessageCommand, DeleteMessageCommand, SQSClient } from "@aws-sdk/client-sqs"
 
-const ENDPOINT = process.env.ENDPOINT
 const REGION = process.env.REGION
 
 //db client
-const ddbClient = new DynamoDBClient({ region: REGION, endpoint: ENDPOINT })
+const ddbClient = new DynamoDBClient({ region: REGION, endpoint: "http://localhost:4566" })
 
 //queues
-const queueClient = new SQSClient({ region: REGION, endpoint: ENDPOINT })
+const queueClient = new SQSClient({ region: REGION, endpoint: "http://localhost:4566" })
 
 const BEACHES_QUEUE = ["long_beach", "venice_beach", "santa_monica_beach", "manhattan_beach"]
 
-const SQS_QUEUE_URL = process.env.ENDPOINT + "/000000000000/"
+const SQS_QUEUE_URL = "http://localhost:4566/" + "/000000000000/"
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
   for (let queue = 0; queue < BEACHES_QUEUE.length; queue++) {
     let messageCount = 0
-    let finalAverage = 0
+    let finalAveragePH = 0
+    let finalAverageEcholi = 0
 
     try {
       const receiveMessageParams = {
@@ -36,9 +36,8 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
           messageCount++
           var body = JSON.parse(message.Body!)
           //console.info("SQS message received")
-          finalAverage += parseInt(body.ph.split(" ")[0])
-          /*console.log("Body message:", body)
-          console.log("Average intermediate:", finalAverage)*/
+          finalAveragePH += parseInt(body.ph.split(" ")[0])
+          finalAverageEcholi += parseInt(body.eCholi.split(" ")[0])
 
           await queueClient.send(
             new DeleteMessageCommand({
@@ -49,17 +48,19 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
           //console.info("Message eliminated")
         }
       }
-      finalAverage = parseInt((finalAverage / messageCount).toFixed(2))
-      console.log("Average for", BEACHES_QUEUE[queue], ":", finalAverage)
+      finalAveragePH = parseInt((finalAveragePH / messageCount).toFixed(2))
+      finalAverageEcholi = parseInt((finalAverageEcholi / messageCount).toFixed(2))
 
       //Save into DynamoDB
       const commandDB = new PutItemCommand({
         TableName: "SeaScan",
         Item: {
-          zone: { S: BEACHES_QUEUE[queue] },
-          ph: { S: finalAverage.toString() },
+          beach: { S: BEACHES_QUEUE[queue] },
+          ph: { S: finalAveragePH.toString() },
+          eCholi: { S: finalAverageEcholi + "UFC/100ml" },
           timeStamp: { S: body.timeStamp },
           dayTime: { S: body.dayTime },
+          active: { BOOL: true },
         },
       })
       const responseDB = await ddbClient.send(commandDB)
@@ -70,14 +71,6 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
       }
     } catch (error) {
       console.log("Error reading from queue", error)
-      return {
-        statusCode: 500,
-        body: JSON.stringify({
-          message: "some error happened",
-        }),
-      }
     }
   }
 }
-
-//lambdaHandler()

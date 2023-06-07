@@ -26,6 +26,8 @@ url = "http://localhost:4566"
 bot = telebot.TeleBot(TOKEN)
 dynamoDb = boto3.resource("dynamodb", endpoint_url=url)
 
+print("⚡ Bot started")
+
 
 def query_data_dynamodb(table):
     measurementTable = dynamoDb.Table(table)
