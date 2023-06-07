@@ -52,11 +52,8 @@ Under the hood, the script will:
 - start the project
 - start all the secondary scripts
 - setup all the functions
-- start bot
 
-After the script finishes its execution, invoke the function that it has created by runnung:
-
-<code>aws lambda invoke --function-name average out --endpoint-url=http://localhost:4566</code>
+After the script is completed, start the bot by typing in a terminal within the root directory: <code>python bot/bot.py</code>
 
 ## Manual run
 If you want to run this script manually:
@@ -71,7 +68,7 @@ If you want to run this script manually:
 - attach the policy <code>aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566</code>
 - create the average function and save the Arn <code>aws lambda create-function --function-name average --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
 - start the script for populating the Database and for simulating the device <code>npm run setup</code> 
-- invoke average function <code>aws lambda invoke --function-name average --endpoint-url=http://localhost:4566</code>
+- start the bot by writing: <code>python bot/bot.py</code>
 
 ## Future developments
 For fure developments this project will add more metrics for scanning Sea water quality. Another goal will be to add email and push notifications in case some parameter is worrying
