@@ -16,7 +16,7 @@ read -p "Insert your email for sending email using SES: " email
 
 clear
 echo -e "\n*** Installing dependencies ***"
-npm install && npm audit fix
+npm install
 
 echo -e "\n *** Generating JavaScript ***"
 npm run build
@@ -28,7 +28,7 @@ clear
 
 echo -e "\n *** Zipping functions ***"
 cd deploy
-npm install && npm audit fix
+npm install
 cd ..
 cp ./dist/functions/average.js ./deploy
 zip -r functions.zip deploy
