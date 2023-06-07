@@ -158,7 +158,7 @@ def handle_button_click(call):
 # Execute the TypeScript file
 def generate_data(message):
     cid = message.chat.id
-    command = ["node", f"{os.getcwd()}\\dist\\device.js"]
+    command = ["node", "..\\dist\\device.js"]
     try:
         process = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE

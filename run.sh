@@ -12,8 +12,11 @@ then
     exit 1
 fi
 
+read -p "Insert your email for sending email using SES: " email
+
+clear
 echo -e "\n*** Installing dependencies ***"
-npm install
+npm install && npm audit fix
 
 echo -e "\n *** Generating JavaScript ***"
 npm run build
@@ -25,10 +28,10 @@ clear
 
 echo -e "\n *** Zipping functions ***"
 cd deploy
-npm install
+npm install && npm audit fix
 cd ..
 cp ./dist/functions/average.js ./deploy
-zip -r average.zip deploy
+zip -r functions.zip deploy
 
 clear
 echo -e "\n *** Setting up lambda ***"
@@ -39,15 +42,15 @@ aws iam create-role --role-name lambdarole --assume-role-policy-document file://
  --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566
 
  aws lambda create-function --function-name average \
- --zip-file fileb://average.zip --handler deploy/average.lambdaHandler \
- --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+ --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler \
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566\n
 
 clear
 echo -e "\n *** Setting up ***"
 npm run setup
 
 clear
-read -p "Insert your email for sending email using SES: " email
+echo -e "\n *** Adding email identity ***"
 aws ses verify-email-identity --email-address $email --endpoint-url="http://localhost:4566"
 
 clear
