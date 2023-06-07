@@ -1,0 +1,4 @@
+{
+  "table": "SeaScan",
+  "cities": ["long_beach", "venice_beach", "santa_monica_beach", "manhattan_beach"]
+}

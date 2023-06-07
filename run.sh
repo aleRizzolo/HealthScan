@@ -1,8 +1,6 @@
 #!/bin/bash
 
-ROOT=$(pwd)
-
-docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm -p 4566:4566 --name aws localstack/localstack
+docker run -d --rm -p 4566:4566 --name aws localstack/localstack:1.4
 
 #check if the container exists
 container=$(docker container ps -f "name=aws")
@@ -26,8 +24,13 @@ npm run start
 clear
 
 echo -e "\n *** Zipping functions ***"
-zip average.zip dist/functions/average.js
+cd deploy
+npm install
+cd ..
+cp ./dist/functions/average.js ./deploy
+zip -r average.zip deploy
 
+clear
 echo -e "\n *** Setting up lambda ***"
 aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' \
  --endpoint-url=http://localhost:4566
@@ -36,7 +39,7 @@ aws iam create-role --role-name lambdarole --assume-role-policy-document file://
  --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566
 
  aws lambda create-function --function-name average \
- --zip-file fileb://average.zip --handler dist/functions/average.lambdaHandler \
+ --zip-file fileb://average.zip --handler deploy/average.lambdaHandler \
  --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 
 clear
@@ -50,7 +53,3 @@ aws ses verify-email-identity --email-address $email --endpoint-url="http://loca
 clear
 echo -e "\n *** Install python dependencies ***"
 pip install -r bot/requirements.txt
-
-clear
-echo -e "\n *** Starting bot ***"
-python3 ./bot/bot.py

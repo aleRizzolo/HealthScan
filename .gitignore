@@ -7,13 +7,16 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-# win script
+# Win script
 *.bat
 
-# python linter
+# Python linter
 .vscode
 
-# zip
+# Files for lambda
+deploy/*.js
+
+# Zip
 *.zip 
 average/
 
