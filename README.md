@@ -64,12 +64,14 @@ If you want to run this script manually:
 - install the dependencies with <code>npm install</code>
 - transpile TypeScript into JavaScript with <code>npm run build</code>
 - create clients and setup db and queues with <code>npm run start</code>
-- zip the function with <code>tar -a -c -f average.zip dist/functions/average.js</code> or if you are on Mac/Linux <code>zip average.zip dist/functions/average.js</code>
+- from <code>/dist/functions</code> copy all the functions that you want to execute in <code>deploy</code> directory
+- go inside deploy directory <code>cd deploy</code> and <code>npm install</code> after that, go back inside the root directory
+- zip the function with <code>tar -a -c -f functions.zip deploy</code> or if you are on Mac/Linux <code>zip functions.zip deploy</code>
 - create a new aws role with <code>aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' --endpoint-url=http://localhost:4566</code>
 - attach the policy <code>aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566</code>
-- create the function and save the Arn <code>aws lambda create-function --function-name average --zip-file fileb://average.zip --handler average/dist/functions/average.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
+- create the average function and save the Arn <code>aws lambda create-function --function-name average --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
 - start the script for populating the Database and for simulating the device <code>npm run setup</code> 
-- invoke the function <code>aws lambda invoke --function-name average --endpoint-url=http://localhost:4566</code>
+- invoke average function <code>aws lambda invoke --function-name average --endpoint-url=http://localhost:4566</code>
 
 ## Future developments
 For fure developments this project will add more metrics for scanning Sea water quality. Another goal will be to add email and push notifications in case some parameter is worrying
