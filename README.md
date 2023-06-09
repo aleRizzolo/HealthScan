@@ -47,6 +47,8 @@ After creating this file, write in it the following variables:
 - AWS_ACCESS_KEY_ID="your-aws-access-key"
 - AWS_SECRET_ACCESS_KEY="your-aws-secret-access-key"
 
+After that, copy the .env file in <code>bot</code> directory
+
 ## Run from script
 If you have a Unix-like system (or WSL2), open a terminal in the project's root directory and type: <code>chmod +x run.sh</code> and then type <code>./run.sh</code> to execute the script.<br>
 Under the hood, the script will: 
