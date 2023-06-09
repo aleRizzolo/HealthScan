@@ -20,7 +20,11 @@ SeaScan is a simulation of IoT sensors that collect data across multiple beach z
 - a status that indicates if the sensor is on or off
 
 ### Project's architecture
-*ToDo*
+Sensors write their parameters on SQS queues. A lambda calculates the average parameters and then sends the result in DynamoDB.
+A user can access those informations by interacting with a Telegram bot. The user can also request all the information and the bot sends an email to the specified address.
+The user can also decide to switch on or off the sensors, by giving command to the bot that triggers another lambda function
+
+![architecture](./images/architecture.png)
 
 ## How to run this project
 ### Prerequisites
@@ -73,7 +77,8 @@ If you want to run this script manually:
 - create a new aws role with <code>aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' --endpoint-url=http://localhost:4566</code>
 - attach the policy <code>aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566</code>
 - create the average function and save the Arn <code>aws lambda create-function --function-name average --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
-- start the script for populating the Database and for simulating the device <code>npm run setup</code> 
+- start the script for populating the Database and for simulating the device <code>npm run setup</code>
+- install bot's dependencies with <code>pip install -r requirements.txt</code>
 - start the bot by writing: <code>python bot/bot.py</code>
 
 ## Future developments
