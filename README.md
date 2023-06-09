@@ -1,7 +1,6 @@
 # SeaScan
 
 Internet of Things has revolutionized the way we monitor environment. IoT technology allows us to collect and analyze data in real-time to track all the metrics of the environment around us. This data allows a better awareness by the people about the ecosystem in wich they are <br>
-This project aims to create an easy way on how to collect and access those informations.
 
 ## Table of Contents
 - [Overview](#overview)<br>
@@ -12,10 +11,15 @@ This project aims to create an easy way on how to collect and access those infor
 - [How to contribute](#how-to-contribute)
 
 ## Overview
-*ToDo*
+SeaScan is a simulation of IoT sensors that collect data across multiple beach zones. The project is based on an IoT Cloud architecture where several IoT sensors collect the datas and send them on Cloud where they are processed through Serverless Computing and stored in a NoSQL database to be easily accessible by a Telegram Bot. The IoT sensors are placed directly into the sea and collect datas such as: 
+- beach name
+- ph level
+- hydrocarbons level
+- eCholi levels
+- date time
+- a status that indicates if the sensor is on or off
 
 ### Project's architecture
-
 *ToDo*
 
 ## How to run this project
