@@ -81,11 +81,9 @@ If you want to run this script manually:
 - attach the policy <code>aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566</code>
 - create the average function and save the Arn <code>aws lambda create-function --function-name average --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
 - create the function for switch all the sensors off and save the Arn <code>aws lambda create-function --function-name offsensors --zip-file fileb://functions.zip --handler deploy/offSensors.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
-- - create the function for switch all the sensors on and save the Arn <code>aws lambda create-function --function-name onsensors --zip-file fileb://functions.zip --handler deploy/onSensors.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
+- create the function for switch all the sensors on and save the Arn <code>aws lambda create-function --function-name onsensors --zip-file fileb://functions.zip --handler deploy/onSensors.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
 - start the script for populating the Database and for simulating the device <code>npm run setup</code>
-- install bot's dependencies with <code>pip install -r requirements.txt</code>
-- start the bot by writing: <code>python bot/bot.py</code>
-
+    
 After that, you need to start the Telegram bot:
 - inside the <code>bot directory</code>, run <code>pip install -r requirements.txt</code>
 - start the bot by running <code>python bot.py</code>
