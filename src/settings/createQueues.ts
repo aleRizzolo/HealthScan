@@ -2,7 +2,7 @@ import { CreateQueueCommand } from "@aws-sdk/client-sqs"
 
 import { queueClient } from "../index"
 
-const BEACHES_QUEUE = ["long_beach", "venice_beach", "santa_monica_beach", "manhattan_beach", "error"]
+const BEACHES_QUEUE = ["long_beach", "venice_beach", "santa_monica_beach", "manhattan_beach"]
 
 export const createQueues = async (sqsQueueName = BEACHES_QUEUE) => {
   for (let beach = 0; beach < BEACHES_QUEUE.length; beach++) {
