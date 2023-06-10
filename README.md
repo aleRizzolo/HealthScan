@@ -70,7 +70,7 @@ After the script is completed, start the bot by typing in a terminal within the 
 
 ## Manual run
 If you want to run this script manually:
-- start the container by typing <code>docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm -p 4566:4566 --name aws localstack/localstack</code>
+- start the container by typing <code>docker run -d --rm -p 4566:4566 --name aws localstack/localstack:1.4</code>
 - install the dependencies with <code>npm install</code>
 - transpile TypeScript into JavaScript with <code>npm run build</code>
 - create clients and setup db and queues with <code>npm run start</code>
