@@ -158,7 +158,7 @@ def handle_button_click(call):
 # Execute the TypeScript file
 def generate_data(message):
     cid = message.chat.id
-    command = ["node", "..\\dist\\device.js"]
+    command = ["node", f"{os.getcwd()}\\dist\\device.js"]
     try:
         process = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -174,11 +174,11 @@ def generate_data(message):
     else:
         print(f"Output:\n{output}")
         bot.send_message(cid, "Processing....")
-        lambda_client = boto3.client('lambda', endpoint_url=url)
+        lambda_client = boto3.client("lambda", endpoint_url=url)
         response = lambda_client.invoke(
-            FunctionName='average',
-            InvocationType='RequestResponse',
-            Payload=json.dumps({'cid': cid})
+            FunctionName="average",
+            InvocationType="RequestResponse",
+            Payload=json.dumps({"cid": cid}),
         )
         bot.send_message(cid, "Done!")
 
@@ -269,17 +269,12 @@ def OFFsensors(message):
     cid = message.chat.id
 
     try:
-        table = dynamoDb.Table("SeaScan")
-        response = table.scan()
-        items = response["Items"]
-
-        for item in items:
-            if item.get("active"):
-                table.update_item(
-                    Key={"zone": item["zone"]},
-                    UpdateExpression="SET active = :new_active",
-                    ExpressionAttributeValues={":new_active": False},
-                )
+        lambda_client = boto3.client("lambda", endpoint_url=url)
+        response = lambda_client.invoke(
+            FunctionName="offsensors",
+            InvocationType="RequestResponse",
+            Payload=json.dumps({"cid": cid}),
+        )
 
         bot.send_message(cid, "Active status updated successfully!")
 
@@ -292,17 +287,12 @@ def ONsensors(message):
     cid = message.chat.id
 
     try:
-        table = dynamoDb.Table("SeaScan")
-        response = table.scan()
-        items = response["Items"]
-
-        for item in items:
-            if not item.get("active"):
-                table.update_item(
-                    Key={"zone": item["zone"]},
-                    UpdateExpression="SET active = :new_active",
-                    ExpressionAttributeValues={":new_active": True},
-                )
+        lambda_client = boto3.client("lambda", endpoint_url=url)
+        response = lambda_client.invoke(
+            FunctionName="onsensors",
+            InvocationType="RequestResponse",
+            Payload=json.dumps({"cid": cid}),
+        )
 
         bot.send_message(cid, "Active status updated successfully!")
 

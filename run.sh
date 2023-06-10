@@ -12,7 +12,8 @@ then
     exit 1
 fi
 
-read -p "Insert your email for sending email using SES: " email
+read -p "Insert your email that you will use in the bot: " email
+aws ses verify-email-identity --email-address $email --endpoint-url="http://localhost:4566"
 
 clear
 echo -e "\n*** Installing dependencies ***"
@@ -30,7 +31,7 @@ echo -e "\n *** Zipping functions ***"
 cd deploy
 npm install
 cd ..
-cp ./dist/functions/average.js ./deploy
+cp ./dist/functions/*.js ./deploy
 zip -r functions.zip deploy
 
 clear
@@ -43,15 +44,19 @@ aws iam create-role --role-name lambdarole --assume-role-policy-document file://
 
  aws lambda create-function --function-name average \
  --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler \
- --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566\n
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+
+ aws lambda create-function --function-name onsensors \
+ --zip-file fileb://functions.zip --handler deploy/onSensors.lambdaHandler \
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+
+ aws lambda create-function --function-name offsensors \
+ --zip-file fileb://functions.zip --handler deploy/offSensors.lambdaHandler \
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 
 clear
 echo -e "\n *** Setting up ***"
 npm run setup
-
-clear
-echo -e "\n *** Adding email identity ***"
-aws ses verify-email-identity --email-address $email --endpoint-url="http://localhost:4566"
 
 clear
 echo -e "\n *** Install python dependencies ***"

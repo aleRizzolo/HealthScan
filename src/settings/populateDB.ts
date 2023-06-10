@@ -24,6 +24,7 @@ export const populateDB = async () => {
         bacterias: { S: (result = getValue(0, 200).toString() + "bacterias/100ml") },
         timeStamp: { S: timestamp },
         dayTime: { S: fullDate },
+        active: { BOOL: true },
       },
     })
     const response = await ddbClient.send(command)
