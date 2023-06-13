@@ -97,9 +97,9 @@ After that, you need to start the Telegram bot:
 ## Bot commands
 - /start: start the bot
 - /help: get a list of available commands
-- Generate Data: triggers a function that calculates average values of ph and eCholi
+- Generate Data: triggers a function that calculates average values of ph and hydrocarbons
 - Average PH: get average ph of all the beaches
-- Average eCholi: get average eCholi of all the beaches
+- Average hydrocarbons: get average hydrocarbons of all the beaches
 - Send Email: sends an emailto the user with all the informations
 - Switch Sensor On: switches on the specidied sensor
 - Switch Sensor Off: switches off the specidied sensor
