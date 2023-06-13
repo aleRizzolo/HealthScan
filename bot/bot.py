@@ -107,8 +107,11 @@ def send_help(message):
     button_send_email = types.InlineKeyboardButton(
         "Send Email", callback_data="sendEmail"
     )
-    button_switch_sensor = types.InlineKeyboardButton(
-        "Switch Sensor", callback_data="switchSensor"
+    button_switch_sensor_on = types.InlineKeyboardButton(
+        "Switch Sensor On", callback_data="switchSensorOn"
+    )
+    button_switch_sensor_off = types.InlineKeyboardButton(
+        "Switch Sensor Off", callback_data="switchSensorOff"
     )
     button_activate_sensors = types.InlineKeyboardButton(
         "Activate Sensors", callback_data="ONsensors"
@@ -125,7 +128,8 @@ def send_help(message):
         button_average_ph,
         button_average_eCholi,
         button_send_email,
-        button_switch_sensor,
+        button_switch_sensor_on,
+        button_switch_sensor_off,
         button_activate_sensors,
         button_deactivate_sensors,
     )
@@ -146,8 +150,10 @@ def handle_button_click(call):
         averageEcholi(call.message)
     elif call.data == "sendEmail":
         sendEmail(call.message)
-    elif call.data == "switchSensor":
-        switchSensor(call.message)
+    elif call.data == "switchSensorOn":
+        switchSensorOn(call.message)
+    elif call.data == "switchSensorOff":
+        switchSensorOff(call.message)
     elif call.data == "ONsensors":
         ONsensors(call.message)
     elif call.data == "OFFsensors":
@@ -158,7 +164,8 @@ def handle_button_click(call):
 # Execute the TypeScript file
 def generate_data(message):
     cid = message.chat.id
-    command = ["node", f"{os.getcwd()}\\dist\\device.js"]
+    # command = ["node", f"{os.getcwd()}\\dist\\device.js"]
+    command = ["node", "..\\dist\\device.js"]
     try:
         process = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -300,8 +307,8 @@ def ONsensors(message):
         bot.send_message(cid, f"Error updating active status: {str(e)}")
 
 
-@bot.message_handler(commands=["switchSensor"])
-def switchSensor(message):
+@bot.message_handler(commands=["switchSensorOn"])
+def switchSensorOn(message):
     cid = message.chat.id
 
     try:
@@ -309,59 +316,83 @@ def switchSensor(message):
         response = table.scan()
         items = response["Items"]
 
-        # Extract the unique zones from the items
-        zones = list(set(item["zone"] for item in items))
+        # Extract the unique beach from the items
+        beach = list(set(item["beach"] for item in items))
 
-        if not zones:
-            bot.send_message(cid, "No zones found in the table.")
+        if not beach:
+            bot.send_message(cid, "No beach found in the table.")
             return
 
-        # Create the reply keyboard markup with buttons for each zone
+        # Create the reply keyboard markup with buttons for each beach
         keyboard = ReplyKeyboardMarkup(row_width=2, one_time_keyboard=True)
-        buttons = [KeyboardButton(zone) for zone in zones]
+        buttons = [KeyboardButton(beach) for beach in beach]
         keyboard.add(*buttons)
 
-        # Send the zone selection prompt with buttons
-        bot.send_message(cid, "Select a zone:", reply_markup=keyboard)
+        # Send the beach selection prompt with buttons
+        bot.send_message(cid, "Select a beach:", reply_markup=keyboard)
 
-        # Register the next step handler to capture the selected zone
-        bot.register_next_step_handler(message, process_zone_selection)
+        # Register the next step handler to capture the selected beach
+        bot.register_next_step_handler(message, process_beach_selection_on)
 
     except Exception as e:
         bot.send_message(cid, f"Error toggling active status: {str(e)}")
 
 
-def process_zone_selection(message):
+@bot.message_handler(commands=["switchSensorOff"])
+def switchSensorOff(message):
     cid = message.chat.id
-    zone = message.text
 
     try:
         table = dynamoDb.Table("SeaScan")
-        response = table.get_item(Key={"zone": zone})
-        item = response.get("Item")
+        response = table.scan()
+        items = response["Items"]
 
-        if item:
-            # Toggle the value of the 'active' attribute
-            new_active = not item.get("active")
+        # Extract the unique beach from the items
+        beach = list(set(item["beach"] for item in items))
 
-            # Update the 'active' attribute for the selected zone
-            table.update_item(
-                Key={"zone": zone},
-                UpdateExpression="SET active = :new_active",
-                ExpressionAttributeValues={":new_active": new_active},
-            )
+        if not beach:
+            bot.send_message(cid, "No beach found in the table.")
+            return
 
-            # Send a confirmation message
-            active_status = "active" if new_active else "inactive"
-            bot.send_message(
-                cid,
-                f"The active status for {zone} has been toggled. It is now {active_status}.",
-            )
-        else:
-            bot.send_message(cid, f"No zone found with the name '{zone}'.")
+        # Create the reply keyboard markup with buttons for each beach
+        keyboard = ReplyKeyboardMarkup(row_width=2, one_time_keyboard=True)
+        buttons = [KeyboardButton(beach) for beach in beach]
+        keyboard.add(*buttons)
+
+        # Send the beach selection prompt with buttons
+        bot.send_message(cid, "Select a beach:", reply_markup=keyboard)
+
+        # Register the next step handler to capture the selected beach
+        bot.register_next_step_handler(message, process_beach_selection_off)
 
     except Exception as e:
         bot.send_message(cid, f"Error toggling active status: {str(e)}")
+
+
+def process_beach_selection_on(message):
+    cid = message.chat.id
+    beach = message.text
+
+    lambda_client = boto3.client("lambda", endpoint_url=url)
+    response = lambda_client.invoke(
+        FunctionName="onsensorbeach",
+        InvocationType="RequestResponse",
+        Payload=json.dumps({"table": "SeaScan", "beach": beach}),
+    )
+    bot.send_message(cid, "Done")
+
+
+def process_beach_selection_off(message):
+    cid = message.chat.id
+    beach = message.text
+
+    lambda_client = boto3.client("lambda", endpoint_url=url)
+    response = lambda_client.invoke(
+        FunctionName="offsensorbeach",
+        InvocationType="RequestResponse",
+        Payload=json.dumps({"table": "SeaScan", "beach": beach}),
+    )
+    bot.send_message(cid, "Done")
 
 
 bot.polling()

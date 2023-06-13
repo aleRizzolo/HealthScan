@@ -54,6 +54,14 @@ aws iam create-role --role-name lambdarole --assume-role-policy-document file://
  --zip-file fileb://functions.zip --handler deploy/offSensors.lambdaHandler \
  --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 
+ aws lambda create-function --function-name offsensorbeach \
+ --zip-file fileb://functions.zip --handler deploy/offSensorBeach.lambdaHandler \
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+
+ aws lambda create-function --function-name onsensorbeach \
+ --zip-file fileb://functions.zip --handler deploy/onSensorBeach.lambdaHandler \
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+
 clear
 echo -e "\n *** Setting up ***"
 npm run setup
