@@ -18,7 +18,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
   for (let queue = 0; queue < BEACHES_QUEUE.length; queue++) {
     let messageCount = 0
     let finalAveragePH = 0
-    let finalAverageEcholi = 0
+    let finalAverageHydrocarbons = 0
 
     try {
       const receiveMessageParams = {
@@ -37,7 +37,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
           var body = JSON.parse(message.Body!)
           //console.info("SQS message received")
           finalAveragePH += parseInt(body.ph.split(" ")[0])
-          finalAverageEcholi += parseInt(body.eCholi.split(" ")[0])
+          finalAverageHydrocarbons += parseInt(body.hydrocarbons.split(" ")[0])
 
           await queueClient.send(
             new DeleteMessageCommand({
@@ -49,7 +49,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
         }
       }
       finalAveragePH = parseInt((finalAveragePH / messageCount).toFixed(2))
-      finalAverageEcholi = parseInt((finalAverageEcholi / messageCount).toFixed(2))
+      finalAverageHydrocarbons = parseInt((finalAverageHydrocarbons / messageCount).toFixed(2))
 
       //Save into DynamoDB
       const commandDB = new PutItemCommand({
@@ -57,7 +57,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
         Item: {
           beach: { S: BEACHES_QUEUE[queue] },
           ph: { S: finalAveragePH.toString() },
-          eCholi: { S: finalAverageEcholi + "UFC/100ml" },
+          hydrocarbons: { S: finalAverageHydrocarbons + "µg/L" },
           timeStamp: { S: body.timeStamp },
           dayTime: { S: body.dayTime },
           active: { BOOL: true },
