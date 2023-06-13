@@ -10,6 +10,7 @@ Internet of Things has revolutionized the way we monitor environment. IoT techno
 - [Run this project](#how-to-run-this-project)
     - [Run from script](#executing-from-script) 
     - [Manual run](#manual-run)
+- [Bot commands](#bot-commands)
 - [Future developments](#future-developments)
 - [How to contribute](#how-to-contribute)
 
@@ -73,7 +74,7 @@ After the script is completed, start the bot by typing in a terminal within the 
 
 ## Manual run
 If you want to run this script manually:
-- start the container by typing <code>docker run -d -v /var/run/docker.sock:/var/run/docker.sock --rm -p 4566:4566 --name aws localstack/localstack</code>
+- start the container by typing <code>docker run -d --rm -p 4566:4566 --name aws localstack/localstack:1.4</code>
 - install the dependencies with <code>npm install</code>
 - transpile TypeScript into JavaScript with <code>npm run build</code>
 - create clients and setup db and queues with <code>npm run start</code>
@@ -84,7 +85,9 @@ If you want to run this script manually:
 - attach the policy <code>aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566</code>
 - create the average function and save the Arn <code>aws lambda create-function --function-name average --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
 - create the function for switch all the sensors off and save the Arn <code>aws lambda create-function --function-name offsensors --zip-file fileb://functions.zip --handler deploy/offSensors.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
-- - create the function for switch all the sensors on and save the Arn <code>aws lambda create-function --function-name onsensors --zip-file fileb://functions.zip --handler deploy/onSensors.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
+- create the function for switch all the sensors on and save the Arn <code>aws lambda create-function --function-name onsensors --zip-file fileb://functions.zip --handler deploy/onSensors.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
+- create the function for switch a sensor (based on user's preference) on and save the Arn <code>aws lambda create-function --function-name onsensorbeach --zip-file fileb://functions.zip --handler deploy/onSensorBeach.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
+- create the function for switch a sensor (based on user's preference) off and save the Arn <code>aws lambda create-function --function-name offsensorbeach --zip-file fileb://functions.zip --handler deploy/offSensorBeach.lambdaHandler --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566</code>
 - start the script for populating the Database and for simulating the device <code>npm run setup</code>
 - install bot's dependencies with <code>pip install -r requirements.txt</code>
 - start the bot by writing: <code>python bot/bot.py</code>
@@ -92,6 +95,18 @@ If you want to run this script manually:
 After that, you need to start the Telegram bot:
 - inside the <code>bot directory</code>, run <code>pip install -r requirements.txt</code>
 - start the bot by running <code>python bot.py</code>
+
+## Bot commands
+- /start: start the bot
+- /help: get a list of available commands
+- Generate Data: triggers a function that calculates average values of ph and eCholi
+- Average PH: get average ph of all the beaches
+- Average eCholi: get average eCholi of all the beaches
+- Send Email: sends an emailto the user with all the informations
+- Switch Sensor On: switches on the specidied sensor
+- Switch Sensor Off: switches off the specidied sensor
+- Activate Sensors: switches on all the sensors
+- Deactivate Sensors: switches off all the sensors
 
 ## Future developments
 For fure developments this project will add more metrics for scanning Sea water quality. Another goal will be to add email and push notifications in case some parameter is worrying
