@@ -40,12 +40,12 @@ def format_message(result):
     for item in result:
         beach = item["beach"]
         ph = item["ph"]
-        eCholi = item["eCholi"]
+        hydrocarbons = item["hydrocarbons"]
         # Extracting only the date portion
         daytime = item["dayTime"].split(",")[0]
 
         formatted_message += (
-            f"- {beach}: ph: {ph}, eCholi: {eCholi}, daytime: {daytime}\n"
+            f"- {beach}: ph: {ph}, hydrocarbons: {hydrocarbons}, daytime: {daytime}\n"
         )
 
     return formatted_message
@@ -64,15 +64,15 @@ def retrievePHAverage(result):
     return formatted_message
 
 
-def retrieveEcholiAverage(result):
+def retrieveHydroAverage(result):
     formatted_message = ""
     for item in result:
         beach = item["beach"]
-        eCholi = item["eCholi"]
+        hydrocarbons = item["hydrocarbons"]
         # Extracting only the date portion
         daytime = item["dayTime"].split(",")[0]
 
-        formatted_message += f"- {beach}: eCholi: {eCholi}, daytime: {daytime}\n"
+        formatted_message += f"- {beach}: hydrocarbons: {hydrocarbons}, daytime: {daytime}\n"
 
     return formatted_message
 
@@ -92,17 +92,14 @@ def send_help(message):
     cid = message.chat.id
 
     # Create the inline buttons
-    button_active_sensors = types.InlineKeyboardButton(
-        "Active Sensors", callback_data="activeSensorsValues"
-    )
     button_generate_data = types.InlineKeyboardButton(
         "Generate Data", callback_data="generateData"
     )
     button_average_ph = types.InlineKeyboardButton(
         "Average PH", callback_data="averagePH"
     )
-    button_average_eCholi = types.InlineKeyboardButton(
-        "Average eCholi", callback_data="averageEcholi"
+    button_average_hydrocarbons = types.InlineKeyboardButton(
+        "Average Hydrocarbons", callback_data="averageHydrocarbons"
     )
     button_send_email = types.InlineKeyboardButton(
         "Send Email", callback_data="sendEmail"
@@ -123,10 +120,9 @@ def send_help(message):
     # Create the inline keyboard markup
     keyboard = types.InlineKeyboardMarkup(row_width=2)
     keyboard.add(
-        button_active_sensors,
         button_generate_data,
         button_average_ph,
-        button_average_eCholi,
+        button_average_hydrocarbons,
         button_send_email,
         button_switch_sensor_on,
         button_switch_sensor_off,
@@ -140,14 +136,12 @@ def send_help(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle_button_click(call):
-    if call.data == "activeSensorsValues":
-        activeSensorsValues(call.message)
-    elif call.data == "generateData":
+    if call.data == "generateData":
         generate_data(call.message)
     elif call.data == "averagePH":
         averagePH(call.message)
-    elif call.data == "averageEcholi":
-        averageEcholi(call.message)
+    elif call.data == "averageHydrocarbons":
+        averageHydrocarbons(call.message)
     elif call.data == "sendEmail":
         sendEmail(call.message)
     elif call.data == "switchSensorOn":
@@ -190,16 +184,6 @@ def generate_data(message):
         bot.send_message(cid, "Done!")
 
 
-@bot.message_handler(commands=["activeSensorsValues"])
-def activeSensorsValues(message):
-    cid = message.chat.id
-    try:
-        result = query_data_dynamodb("SeaScan")
-    except Exception as e:
-        print(e)
-    bot.send_message(cid, format_message(result))
-
-
 @bot.message_handler(commands=["averagePH"])
 def averagePH(message):
     cid = message.chat.id
@@ -210,14 +194,14 @@ def averagePH(message):
     bot.send_message(cid, retrievePHAverage(result))
 
 
-@bot.message_handler(commands=["averageEcholi"])
-def averageEcholi(message):
+@bot.message_handler(commands=["averageHydrocarbons"])
+def averageHydrocarbons(message):
     cid = message.chat.id
     try:
         result = query_data_dynamodb("SeaScan")
     except Exception as e:
         print(e)
-    bot.send_message(cid, retrieveEcholiAverage(result))
+    bot.send_message(cid, retrieveHydroAverage(result))
 
 
 @bot.message_handler(commands=["sendEmail"])

@@ -20,7 +20,7 @@ export const lambdaHandler = async (event: any) => {
       TableName: "SeaScan",
       Item: {
         beach: { S: beach },
-        ph: { S: (result = getValue(0, 14).toString()) },
+        ph: { S: 0 + "" },
         hydrocarbons: { S: 0 + "µg/L" },
         eCholi: { S: 0 + "UFC/100ml" },
         bacterias: { S: 0 + "bacterias/100ml" },
