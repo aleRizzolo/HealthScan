@@ -2,11 +2,11 @@
 
 Internet of Things has revolutionized the way we monitor environment. IoT technology allows us to collect and analyze data in real-time to track all the metrics of the environment around us. This data allows a better awareness by the people about the ecosystem in wich they are 
 
-![beaches](./images/beaches.jpg)
+![beaches](./images/map.jpg)<br>
 *image from [Los Angeles County](https://beaches.lacounty.gov/find-a-beach/)* 
 
 ## Table of Contents
-- [Overview](#overview)<br>
+- [Overview](#overview)
 - [Run this project](#how-to-run-this-project)
     - [Run from script](#executing-from-script) 
     - [Manual run](#manual-run)
