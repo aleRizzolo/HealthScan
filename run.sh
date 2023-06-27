@@ -13,7 +13,7 @@ then
 fi
 
 read -p "Insert your email that you will use in the bot: " email
-aws ses verify-email-identity --email-address $email --endpoint-url="http://localhost:4566"
+aws ses verify-email-identity --email-address $email --endpoint-url="http://localhost:4566" >> logs.txt
 
 clear
 echo -e "\n*** Installing dependencies ***"
@@ -37,30 +37,30 @@ zip -r functions.zip deploy
 clear
 echo -e "\n *** Setting up lambda ***"
 aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' \
- --endpoint-url=http://localhost:4566
+ --endpoint-url=http://localhost:4566 
 
  aws iam put-role-policy --role-name lambdarole \
  --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566
 
  aws lambda create-function --function-name average \
  --zip-file fileb://functions.zip --handler deploy/average.lambdaHandler \
- --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566 >> logs.txt
 
  aws lambda create-function --function-name onsensors \
  --zip-file fileb://functions.zip --handler deploy/onSensors.lambdaHandler \
- --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566 >> logs.txt
 
  aws lambda create-function --function-name offsensors \
  --zip-file fileb://functions.zip --handler deploy/offSensors.lambdaHandler \
- --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566 >> logs.txt
 
  aws lambda create-function --function-name offsensorbeach \
  --zip-file fileb://functions.zip --handler deploy/offSensorBeach.lambdaHandler \
- --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566 >> logs.txt
 
  aws lambda create-function --function-name onsensorbeach \
  --zip-file fileb://functions.zip --handler deploy/onSensorBeach.lambdaHandler \
- --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+ --runtime nodejs18.x --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566 >> logs.txt
 
 clear
 echo -e "\n *** Setting up ***"

@@ -1,0 +1,120 @@
+{
+    "FunctionName": "average",
+    "FunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:average",
+    "Runtime": "nodejs18.x",
+    "Role": "arn:aws:iam::000000000000:role/lambdarole",
+    "Handler": "deploy/average.lambdaHandler",
+    "CodeSize": 2945057,
+    "Description": "",
+    "Timeout": 3,
+    "LastModified": "2023-06-27T11:25:57.258+0000",
+    "CodeSha256": "5R4pVBhJvDItF2lO2PybV2B6ocF3aEg8Y9IBS+GfOLw=",
+    "Version": "$LATEST",
+    "VpcConfig": {},
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "ae024377-be7c-4363-b1c4-780c79cc0045",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ]
+}
+{
+    "FunctionName": "onsensors",
+    "FunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:onsensors",
+    "Runtime": "nodejs18.x",
+    "Role": "arn:aws:iam::000000000000:role/lambdarole",
+    "Handler": "deploy/onSensors.lambdaHandler",
+    "CodeSize": 2945057,
+    "Description": "",
+    "Timeout": 3,
+    "LastModified": "2023-06-27T11:25:59.801+0000",
+    "CodeSha256": "5R4pVBhJvDItF2lO2PybV2B6ocF3aEg8Y9IBS+GfOLw=",
+    "Version": "$LATEST",
+    "VpcConfig": {},
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "fd1134c2-84db-4e25-adc3-50bef02b3f88",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ]
+}
+{
+    "FunctionName": "offsensors",
+    "FunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:offsensors",
+    "Runtime": "nodejs18.x",
+    "Role": "arn:aws:iam::000000000000:role/lambdarole",
+    "Handler": "deploy/offSensors.lambdaHandler",
+    "CodeSize": 2945057,
+    "Description": "",
+    "Timeout": 3,
+    "LastModified": "2023-06-27T11:26:02.348+0000",
+    "CodeSha256": "5R4pVBhJvDItF2lO2PybV2B6ocF3aEg8Y9IBS+GfOLw=",
+    "Version": "$LATEST",
+    "VpcConfig": {},
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "497e15be-d154-4431-96d3-2b7ff90d46f0",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ]
+}
+{
+    "FunctionName": "offsensorbeach",
+    "FunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:offsensorbeach",
+    "Runtime": "nodejs18.x",
+    "Role": "arn:aws:iam::000000000000:role/lambdarole",
+    "Handler": "deploy/offSensorBeach.lambdaHandler",
+    "CodeSize": 2945057,
+    "Description": "",
+    "Timeout": 3,
+    "LastModified": "2023-06-27T11:26:06.374+0000",
+    "CodeSha256": "5R4pVBhJvDItF2lO2PybV2B6ocF3aEg8Y9IBS+GfOLw=",
+    "Version": "$LATEST",
+    "VpcConfig": {},
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "6a3d55f7-3607-46e3-b57e-0f38003c0889",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ]
+}
+{
+    "FunctionName": "onsensorbeach",
+    "FunctionArn": "arn:aws:lambda:us-east-1:000000000000:function:onsensorbeach",
+    "Runtime": "nodejs18.x",
+    "Role": "arn:aws:iam::000000000000:role/lambdarole",
+    "Handler": "deploy/onSensorBeach.lambdaHandler",
+    "CodeSize": 2945057,
+    "Description": "",
+    "Timeout": 3,
+    "LastModified": "2023-06-27T11:26:09.390+0000",
+    "CodeSha256": "5R4pVBhJvDItF2lO2PybV2B6ocF3aEg8Y9IBS+GfOLw=",
+    "Version": "$LATEST",
+    "VpcConfig": {},
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "8130ce66-6ddd-4851-9442-75fb6efbcd49",
+    "State": "Active",
+    "LastUpdateStatus": "Successful",
+    "PackageType": "Zip",
+    "Architectures": [
+        "x86_64"
+    ]
+}
